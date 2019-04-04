@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/webvr-polyfill@latest/build/webvr-polyfill.js'></script>
+
+		<script>
+      AFRAME.registerComponent('handle-events', {
+        init: function () {
+					var sceneEl = document.querySelector('a-scene');
+					var rel = sceneEl.querySelector('#rocketel')
+          var bel = sceneEl.querySelector('#boxId')
+          var b2el = sceneEl.querySelector('#boxId3')
+          var b3el = sceneEl.querySelector('#boxId4')
+          var rbel = sceneEl.querySelector('#boxId2')
+          var fel = sceneEl.querySelector('#firel')
+          var el = this.el;
+          bel.addEventListener('mouseenter', function () {
+            rel.setAttribute('rotation', '0 0 0');
+            rel.setAttribute('animation', 'autoplay: false; dur: 500; easing: linear; property: position; startEvents: startAnimation; pauseEvents: pauseAnimation; to:  0 10 -12');
+            el.emit("startAnimation");
+            bel.setAttribute('color', '#EF2D5E');
+            fel.setAttribute('visible', 'true');
+
+          });
+          b2el.addEventListener('mouseenter', function () {
+
+            b2el.setAttribute('color', '#EF2D5E');
+            fel.setAttribute('visible', 'true');
+            rel.setAttribute('rotation', '0 0 0');
+            rel.setAttribute('animation', 'autoplay: false; dur: 500; easing: linear; property: position; startEvents: startAnimation; pauseEvents: pauseAnimation; to:  0 20 -12');
+            el.emit("startAnimation");
+          });
+          b3el.addEventListener('mouseenter', function () {
+
+            b3el.setAttribute('color', '#EF2D5E');
+            fel.setAttribute('visible', 'true');
+            rel.setAttribute('rotation', '0 0 -30');
+            rel.setAttribute('animation', 'autoplay: false; dur: 500; easing: linear; property: position; startEvents: startAnimation; pauseEvents: pauseAnimation; to:  10.98 20 -12');
+            el.emit("startAnimation");
+          });
+          rbel.addEventListener('mouseenter', function () {
+            rbel.setAttribute('color', '#EF2D5E');
+            el.emit("pauseAnimation");
+            fel.setAttribute('visible', 'false');
+            rel.setAttribute('position', '0 0 -12');
+
+          });
+          rbel.addEventListener('mouseleave', function () {
+            rbel.setAttribute('color', 'white');
+
+
+          });
+          bel.addEventListener('mouseleave', function () {
+            bel.setAttribute('color', 'white');
+
+          });
+          b2el.addEventListener('mouseleave', function () {
+            b2el.setAttribute('color', 'white');
+
+          });
+          b3el.addEventListener('mouseleave', function () {
+            b3el.setAttribute('color', 'white');
+
+          });
+        }
+      });
+    </script>
+
+  </head>
+  <body>
+    <a-scene>
+			<a-assets>
+					<a-asset-item id="rocket" src="./CartoonRocket.gltf"></a-asset-item>
+          <a-asset-item id="fire" src="./model.gltf"></a-asset-item>
+			</a-assets>
+
+			<a-entity>
+	        <a-camera>
+	            <a-entity id="mycursor" cursor="fuse: true; fuseTimeout: 500;"
+	            position="0 0 -1"
+	            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+	            material="color: black; shader: flat">
+	            </a-entity>
+	        </a-camera>
+	    </a-entity>
+
+
+
+
+			<a-box id="boxId" position="3 0 -5" scale="2 2 0.25" rotation="0 -45 0" handle-events>
+        <a-entity text="value: LAUNCH; color: black" position="1.27 0.3 1" scale="3 3 3"></a-entity>
+      </a-box>
+      <a-box id="boxId3" position="5 0 -4" scale="2 2 0.25" rotation="0 -45 0" handle-events>
+        <a-entity text="value: LAUNCH2; color: black" position="1.27 0.3 1" scale="3 3 3"></a-entity>
+      </a-box>
+      <a-box id="boxId4" position="7 0 -2" scale="2 2 0.25" rotation="0 -45 0" handle-events>
+        <a-entity text="value: LAUNCH3; color: black" position="1.27 0.3 1" scale="3 3 3"></a-entity>
+      </a-box>
+
+
+      <a-box id="boxId2" position="-3 0 -5" scale="2 2 0.25" rotation="0 45 0" handle-events>
+        <a-entity text="value: RESTART; color: black" position="1.17 0.3 1" scale="3 3 3"></a-entity>
+      </a-box>
+
+			<a-entity rotation = '0 0 0' handle-events id='rocketel' gltf-model="#rocket" position="0 0 -12" animation="autoplay: false; dur: 500; easing: linear; property: position; startEvents: startAnimation; pauseEvents: pauseAnimation; to:  0 10 -12">
+        <a-entity visible="false" id='firel' gltf-model="#fire" position="1.140 16 12.740" rotation="180 0 0" scale="10 10 10" ></a-entity>
+
+        <a-entity text="value: 3 Gg; color: black" position="12 5 0" scale="20 20 20"></a-entity>
+
+        <a-entity line="start: 0, -1000000, 0; end: 0 15 0; color: red"
+          line__2="start: 0, 15, 0; end: -1 12 0; color: red"
+          line__3="start: 0, 15, 0; end: 1 12 0; color: red"
+
+          >
+        </a-entity>
+
+      </a-entity>
+      <a-entity
+        line__4="start: -1000000, 2, 1.370; end: 1000000 1 -12; color: red"
+        >
+      </a-entity>
+
+
+			<a-sky color="#ECECEC"></a-sky>
+			<a-entity environment="preset: forest; dressingAmount: 500"></a-entity>
+    </a-scene>
+  </body>
+</html>
